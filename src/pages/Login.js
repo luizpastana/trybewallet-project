@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { actionLogin } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -25,6 +28,17 @@ class Login extends React.Component {
     } else {
       this.setState({ buttonDisable: true });
     }
+  }
+
+  hendleSubmit = (e) => {
+    // Envia para o estado global
+    // Envia para a pagina '/carteira'
+    e.preventDefault();
+    const { emailInput } = this.state;
+    const { history, submitLogin } = this.props;
+    submitLogin(emailInput);
+    this.setState({ emailInput: '', senhaInput: '' });
+    history.push('/carteira');
   }
 
   render() {
@@ -56,6 +70,7 @@ class Login extends React.Component {
         <button
           type="button"
           disabled={ buttonDisable }
+          onClick={ this.hendleSubmit }
         >
           Entrar
         </button>
@@ -64,4 +79,13 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  submitLogin: (email) => dispatch(actionLogin(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  history: PropTypes.shape.isRequired,
+  submitLogin: PropTypes.func.isRequired,
+};
