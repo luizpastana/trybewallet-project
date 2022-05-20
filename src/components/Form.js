@@ -12,12 +12,27 @@ class Form extends React.Component {
       inputDescribe: '',
       category: '',
       method: '',
+      exchangeRates: undefined,
     };
   }
 
   handleChange = ({ target }) => {
     const { name, value } = target;
     this.setState({ [name]: value });
+  }
+
+  fetchExchangeRates = async () => {
+    console.log('ExchangeRates');
+    const { handleSubmitForm } = this.props;
+    const url = 'https://economia.awesomeapi.com.br/json/all';
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      this.setState({ exchangeRates: data },
+        () => handleSubmitForm(this.state));
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   renderOptions = () => {
@@ -42,7 +57,6 @@ class Form extends React.Component {
   }
 
   render() {
-    const { handleSubmitForm } = this.props;
     const { inputValue, inputDescribe, category, method } = this.state;
     return (
       <form>
@@ -107,7 +121,7 @@ class Form extends React.Component {
         </label>
         <button
           type="button"
-          onClick={ handleSubmitForm(this.state) }
+          onClick={ this.fetchExchangeRates }
         >
           Adicionar despesa
         </button>
