@@ -13,6 +13,7 @@ class Form extends React.Component {
       category: '',
       method: '',
       exchangeRates: undefined,
+      id: '',
     };
   }
 
@@ -23,12 +24,12 @@ class Form extends React.Component {
 
   fetchExchangeRates = async () => {
     console.log('ExchangeRates');
-    const { handleSubmitForm } = this.props;
+    const { handleSubmitForm, id } = this.props;
     const url = 'https://economia.awesomeapi.com.br/json/all';
     try {
       const response = await fetch(url);
       const data = await response.json();
-      this.setState({ exchangeRates: data },
+      this.setState({ exchangeRates: data, id: id + 1 },
         () => handleSubmitForm(this.state));
     } catch (error) {
       console.error(error);
@@ -132,6 +133,7 @@ class Form extends React.Component {
 
 const mapStateToProps = (state) => ({
   coin: state.wallet.wallet.currencies,
+  id: state.wallet.wallet.expenses.length - 1,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -143,4 +145,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(Form);
 Form.propTypes = {
   coin: PropTypes.arrayOf.isRequired,
   handleSubmitForm: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
 };
