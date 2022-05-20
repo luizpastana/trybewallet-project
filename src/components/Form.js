@@ -5,13 +5,23 @@ import PropTypes from 'prop-types';
 class Form extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      coinSelect: '',
+      inputValue: '',
+      inputDescribe: '',
+      category: '',
+      method: '',
+    };
+  }
+
+  handleChange = ({ target }) => {
+    const { name, value } = target;
+    this.setState({ [name]: value });
   }
 
   renderOptions = () => {
+    const { coinSelect } = this.state;
     const { coin = [] } = this.props;
-    console.log(this.props);
-    console.log(coin);
     return (
       <label
         htmlFor="coinSelect"
@@ -20,6 +30,8 @@ class Form extends React.Component {
         <select
           id="coinSelect"
           name="coinSelect"
+          value={ coinSelect }
+          onChange={ this.handleChange }
         >
           {coin.map((c, i) => <option key={ i } value={ `${c}` }>{`${c}`}</option>)}
         </select>
@@ -28,6 +40,7 @@ class Form extends React.Component {
   }
 
   render() {
+    const { inputValue, inputDescribe, category, method } = this.state;
     return (
       <form>
         <label
@@ -37,6 +50,9 @@ class Form extends React.Component {
           <input
             data-testid="value-input"
             id="inputValue"
+            name="inputValue"
+            value={ inputValue }
+            onChange={ this.handleChange }
           />
         </label>
         <label
@@ -46,6 +62,9 @@ class Form extends React.Component {
           <input
             data-testid="description-input"
             id="inputDescribe"
+            name="inputDescribe"
+            value={ inputDescribe }
+            onChange={ this.handleChange }
           />
         </label>
         {this.renderOptions()}
@@ -57,6 +76,8 @@ class Form extends React.Component {
             id="category"
             name="category"
             data-testid="tag-input"
+            value={ category }
+            onChange={ this.handleChange }
           >
             <option value="alimentacao">Alimentação</option>
             <option value="lazer">Lazer</option>
@@ -73,6 +94,8 @@ class Form extends React.Component {
             id="method"
             name="method"
             data-testid="method-input"
+            value={ method }
+            onChange={ this.handleChange }
           >
             <option value="dinheiro">Dinheiro</option>
             <option value="credito">Cartão de crédito</option>
