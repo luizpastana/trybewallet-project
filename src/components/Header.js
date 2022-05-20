@@ -34,7 +34,7 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  userEmail: state.user.email,
+  userEmail: state.user.user.email,
 });
 
 export default connect(mapStateToProps)(Header);

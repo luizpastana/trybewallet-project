@@ -23,6 +23,7 @@ class Form extends React.Component {
   renderOptions = () => {
     const { coinSelect } = this.state;
     const { coin = [] } = this.props;
+    console.log(coin);
     return (
       <label
         htmlFor="coinSelect"
@@ -116,7 +117,7 @@ class Form extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  coin: state.wallet.currencies,
+  coin: state.wallet.wallet.currencies,
 });
 
 const mapDispatchToProps = (dispatch) => ({

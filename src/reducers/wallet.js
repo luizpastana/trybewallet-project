@@ -10,9 +10,11 @@ const initialState = {
 const walletReducer = (state = initialState, action) => {
   switch (action.type) {
   case CURRENCY:
-    return { ...state, currencies: [...action.payload] };
+    return { ...state, wallet: { ...state.wallet, currencies: action.payload } };
   case SUBMIT_FORM:
-    return { ...state, expenses: action.payload };
+    // const id = state.wallet.expenses.length;
+    // const expense = [action.payload, id]
+    return { ...state, wallet: { ...state.wallet, expenses: action.payload } };
   default:
     return state;
   }
