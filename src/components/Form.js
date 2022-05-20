@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { actionForm } from '../actions';
 
 class Form extends React.Component {
   constructor(props) {
@@ -40,6 +41,7 @@ class Form extends React.Component {
   }
 
   render() {
+    const { handleSubmitForm } = this.props;
     const { inputValue, inputDescribe, category, method } = this.state;
     return (
       <form>
@@ -102,6 +104,12 @@ class Form extends React.Component {
             <option value="debito">Cartão de débito</option>
           </select>
         </label>
+        <button
+          type="button"
+          onClick={ handleSubmitForm(this.state) }
+        >
+          Adicionar despesa
+        </button>
       </form>
     );
   }
@@ -111,8 +119,13 @@ const mapStateToProps = (state) => ({
   coin: state.wallet.currencies,
 });
 
-export default connect(mapStateToProps)(Form);
+const mapDispatchToProps = (dispatch) => ({
+  handleSubmitForm: (form) => dispatch(actionForm(form)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
 
 Form.propTypes = {
   coin: PropTypes.arrayOf.isRequired,
+  handleSubmitForm: PropTypes.func.isRequired,
 };

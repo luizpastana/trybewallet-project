@@ -1,5 +1,6 @@
 export const EMAIL_LOGIN = 'EMAIL_LOGIN';
 export const CURRENCY = 'CURRENCY';
+export const SUBMIT_FORM = 'SUBMIT_FORM';
 
 export const actionLogin = (email) => ({
   type: EMAIL_LOGIN,
@@ -26,3 +27,8 @@ export function fetchAPI() {
     }
   };
 }
+
+export const actionForm = (form) => ({
+  type: SUBMIT_FORM,
+  payload: form,
+});
