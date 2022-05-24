@@ -7,10 +7,10 @@ class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      coinSelect: '',
-      inputValue: '',
-      inputDescribe: '',
-      category: '',
+      currency: '',
+      value: '',
+      description: '',
+      tag: '',
       method: '',
       exchangeRates: undefined,
       id: '',
@@ -23,7 +23,6 @@ class Form extends React.Component {
   }
 
   fetchExchangeRates = async () => {
-    console.log('ExchangeRates');
     const { handleSubmitForm, id } = this.props;
     const url = 'https://economia.awesomeapi.com.br/json/all';
     try {
@@ -31,24 +30,33 @@ class Form extends React.Component {
       const data = await response.json();
       this.setState({ exchangeRates: data, id: id + 1 },
         () => handleSubmitForm(this.state));
+      this.setState({
+        currency: '',
+        value: '',
+        description: '',
+        tag: '',
+        method: '',
+        exchangeRates: undefined,
+        id: '',
+      });
     } catch (error) {
       console.error(error);
     }
   }
 
   renderOptions = () => {
-    const { coinSelect } = this.state;
+    const { currency } = this.state;
     const { coin = [] } = this.props;
-    console.log(coin);
+    // console.log(coin);
     return (
       <label
-        htmlFor="coinSelect"
+        htmlFor="currency"
       >
         Moeda:
         <select
-          id="coinSelect"
-          name="coinSelect"
-          value={ coinSelect }
+          id="currency"
+          name="currency"
+          value={ currency }
           onChange={ this.handleChange }
         >
           {coin.map((c, i) => <option key={ i } value={ `${c}` }>{`${c}`}</option>)}
@@ -58,50 +66,50 @@ class Form extends React.Component {
   }
 
   render() {
-    const { inputValue, inputDescribe, category, method } = this.state;
+    const { value, description, tag, method } = this.state;
     return (
       <form>
         <label
-          htmlFor="inputValue"
+          htmlFor="value"
         >
           Valor:
           <input
             data-testid="value-input"
-            id="inputValue"
-            name="inputValue"
-            value={ inputValue }
+            id="value"
+            name="value"
+            value={ value }
             onChange={ this.handleChange }
           />
         </label>
         <label
-          htmlFor="inputDescribe"
+          htmlFor="description"
         >
           Descrição:
           <input
             data-testid="description-input"
-            id="inputDescribe"
-            name="inputDescribe"
-            value={ inputDescribe }
+            id="description"
+            name="description"
+            value={ description }
             onChange={ this.handleChange }
           />
         </label>
         {this.renderOptions()}
         <label
-          htmlFor="category"
+          htmlFor="tag"
         >
           Categoria:
           <select
-            id="category"
-            name="category"
+            id="tag"
+            name="tag"
             data-testid="tag-input"
-            value={ category }
+            value={ tag }
             onChange={ this.handleChange }
           >
-            <option value="alimentacao">Alimentação</option>
-            <option value="lazer">Lazer</option>
-            <option value="trabalho">Trabalho</option>
-            <option value="transporte">Transporte</option>
-            <option value="saude">Saúde</option>
+            <option value="Alimentacao">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saude">Saúde</option>
           </select>
         </label>
         <label
@@ -115,9 +123,9 @@ class Form extends React.Component {
             value={ method }
             onChange={ this.handleChange }
           >
-            <option value="dinheiro">Dinheiro</option>
-            <option value="credito">Cartão de crédito</option>
-            <option value="debito">Cartão de débito</option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
         <button
@@ -132,8 +140,8 @@ class Form extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  coin: state.wallet.wallet.currencies,
-  id: state.wallet.wallet.expenses.length - 1,
+  coin: state.wallet.currencies,
+  id: state.wallet.expenses.length - 1,
 });
 
 const mapDispatchToProps = (dispatch) => ({
