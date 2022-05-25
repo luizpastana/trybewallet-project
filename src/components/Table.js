@@ -12,12 +12,19 @@ class Table extends React.Component {
   priceValue = (obj) => {
     const { exchangeRates } = obj;
     const { ask } = exchangeRates[obj.currency];
-    return Number(ask).toFixed(2);
+    const result = Number(ask).toFixed(2);
+    return result.toString();
+  }
+
+  valueConvert = (obj) => {
+    const { exchangeRates } = obj;
+    const { ask } = exchangeRates[obj.currency];
+    const result = (Number(ask) * obj.value).toFixed(2);
+    return result.toString();
   }
 
   render() {
     const { despesas } = this.props;
-    console.log(despesas);
     return (
       <table>
         <tr>
@@ -36,10 +43,10 @@ class Table extends React.Component {
             <td>{despesa.description}</td>
             <td>{despesa.tag}</td>
             <td>{despesa.method}</td>
-            <td>{despesa.value}</td>
+            <td>{Number(despesa.value).toFixed(2)}</td>
             <td>{this.coinName(despesa)}</td>
             <td>{this.priceValue(despesa)}</td>
-            <td>{despesa.tag}</td>
+            <td>{this.valueConvert(despesa)}</td>
             <td>Real</td>
             <td>Editar/Excluir</td>
           </tr>
