@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { actionDelete } from '../actions';
 
 class Table extends React.Component {
   coinName = (obj) => {
@@ -24,7 +25,7 @@ class Table extends React.Component {
   }
 
   render() {
-    const { despesas } = this.props;
+    const { despesas, deleteItem } = this.props;
     return (
       <table>
         <tr>
@@ -38,8 +39,8 @@ class Table extends React.Component {
           <th>Moeda de conversão</th>
           <th>Editar/Excluir</th>
         </tr>
-        {despesas.map((despesa, i) => (
-          <tr key={ i }>
+        {despesas.map((despesa) => (
+          <tr key={ despesa.id }>
             <td>{despesa.description}</td>
             <td>{despesa.tag}</td>
             <td>{despesa.method}</td>
@@ -52,7 +53,7 @@ class Table extends React.Component {
               <button
                 type="button"
                 data-testid="delete-btn"
-                // onClick={funcao}
+                onClick={ () => deleteItem(despesa.id) }
               >
                 Excluir
               </button>
@@ -68,8 +69,13 @@ const mapStateToProps = (state) => ({
   despesas: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(Table);
+const mapDispatchToProps = (dispatch) => ({
+  deleteItem: (id) => dispatch(actionDelete(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
 
 Table.propTypes = {
   despesas: PropTypes.arrayOf.isRequired,
+  deleteItem: PropTypes.func.isRequired,
 };
