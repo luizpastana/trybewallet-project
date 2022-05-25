@@ -48,7 +48,15 @@ class Table extends React.Component {
             <td>{this.priceValue(despesa)}</td>
             <td>{this.valueConvert(despesa)}</td>
             <td>Real</td>
-            <td>Editar/Excluir</td>
+            <td>
+              <button
+                type="button"
+                data-testid="delete-btn"
+                // onClick={funcao}
+              >
+                Excluir
+              </button>
+            </td>
           </tr>
         ))}
       </table>
