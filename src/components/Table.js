@@ -3,6 +3,19 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class Table extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  // };
+
+  coinName = (obj) => {
+    const { exchangeRates } = obj;
+    // const rate = exchangeRates.filter((exc) => exc === obj.currency);
+    const { name } = exchangeRates[obj.currency];
+    // const name = exchangeRates[obj.currency].name;
+    console.log(name.replace('/Real Brasileiro', ''));
+    // console.log(obj, exchangeRates);
+  }
+
   render() {
     const { despesas } = this.props;
     console.log(despesas);
@@ -25,10 +38,10 @@ class Table extends React.Component {
             <td>{despesa.tag}</td>
             <td>{despesa.method}</td>
             <td>{despesa.value}</td>
-            <td>{despesa.currency}</td>
+            <td>{this.coinName(despesa)}</td>
             <td>{despesa.tag}</td>
             <td>{despesa.tag}</td>
-            <td>{despesa.description}</td>
+            <td>Real</td>
             <td>Editar/Excluir</td>
           </tr>
         ))}
