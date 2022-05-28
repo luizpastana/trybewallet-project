@@ -2,6 +2,7 @@ export const EMAIL_LOGIN = 'EMAIL_LOGIN';
 export const CURRENCY = 'CURRENCY';
 export const SUBMIT_FORM = 'SUBMIT_FORM';
 export const DELETE = 'DELETE';
+export const EDIT = 'EDIT';
 
 export const actionLogin = (email) => ({
   type: EMAIL_LOGIN,
@@ -36,5 +37,10 @@ export const actionForm = (form) => ({
 
 export const actionDelete = (id) => ({
   type: DELETE,
+  payload: id,
+});
+
+export const actionEdit = (id) => ({
+  type: EDIT,
   payload: id,
 });

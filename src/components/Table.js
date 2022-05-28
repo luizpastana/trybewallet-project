@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { actionDelete } from '../actions';
+import { actionDelete, actionEdit } from '../actions';
 
 class Table extends React.Component {
   coinName = (obj) => {
@@ -25,7 +25,7 @@ class Table extends React.Component {
   }
 
   render() {
-    const { despesas, deleteItem } = this.props;
+    const { despesas, deleteItem, editItem } = this.props;
     return (
       <table>
         <tr>
@@ -57,6 +57,13 @@ class Table extends React.Component {
               >
                 Excluir
               </button>
+              <button
+                type="button"
+                data-testid="edit-btn"
+                onClick={ () => editItem(despesa.id) }
+              >
+                Editar
+              </button>
             </td>
           </tr>
         ))}
@@ -71,6 +78,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   deleteItem: (id) => dispatch(actionDelete(id)),
+  editItem: (id) => dispatch(actionEdit(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
@@ -78,4 +86,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(Table);
 Table.propTypes = {
   despesas: PropTypes.arrayOf.isRequired,
   deleteItem: PropTypes.func.isRequired,
+  editItem: PropTypes.func.isRequired,
 };
