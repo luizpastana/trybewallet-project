@@ -2,8 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { actionDelete, actionEdit } from '../actions';
+import EditExpenses from './EditExpenses';
 
 class Table extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showEdit: false,
+    };
+  }
+
   coinName = (obj) => {
     const { exchangeRates } = obj;
     const { name } = exchangeRates[obj.currency];
@@ -24,50 +32,60 @@ class Table extends React.Component {
     return result.toString();
   }
 
+  renderEdit = (id) => {
+    const { editItem } = this.props;
+    editItem(id);
+    this.setState({ showEdit: true });
+  }
+
   render() {
-    const { despesas, deleteItem, editItem } = this.props;
+    const { despesas, deleteItem } = this.props;
+    const { showEdit } = this.state;
     return (
-      <table>
-        <tr>
-          <th>Descrição</th>
-          <th>Tag</th>
-          <th>Método de pagamento</th>
-          <th>Valor</th>
-          <th>Moeda</th>
-          <th>Câmbio utilizado</th>
-          <th>Valor convertido</th>
-          <th>Moeda de conversão</th>
-          <th>Editar/Excluir</th>
-        </tr>
-        {despesas.map((despesa) => (
-          <tr key={ despesa.id }>
-            <td>{despesa.description}</td>
-            <td>{despesa.tag}</td>
-            <td>{despesa.method}</td>
-            <td>{Number(despesa.value).toFixed(2)}</td>
-            <td>{this.coinName(despesa)}</td>
-            <td>{this.priceValue(despesa)}</td>
-            <td>{this.valueConvert(despesa)}</td>
-            <td>Real</td>
-            <td>
-              <button
-                type="button"
-                data-testid="delete-btn"
-                onClick={ () => deleteItem(despesa.id) }
-              >
-                Excluir
-              </button>
-              <button
-                type="button"
-                data-testid="edit-btn"
-                onClick={ () => editItem(despesa.id) }
-              >
-                Editar
-              </button>
-            </td>
+      <>
+        <table>
+          <tr>
+            <th>Descrição</th>
+            <th>Tag</th>
+            <th>Método de pagamento</th>
+            <th>Valor</th>
+            <th>Moeda</th>
+            <th>Câmbio utilizado</th>
+            <th>Valor convertido</th>
+            <th>Moeda de conversão</th>
+            <th>Editar/Excluir</th>
           </tr>
-        ))}
-      </table>
+          {despesas.map((despesa) => (
+            <tr key={ despesa.id }>
+              <td>{despesa.description}</td>
+              <td>{despesa.tag}</td>
+              <td>{despesa.method}</td>
+              <td>{Number(despesa.value).toFixed(2)}</td>
+              <td>{this.coinName(despesa)}</td>
+              <td>{this.priceValue(despesa)}</td>
+              <td>{this.valueConvert(despesa)}</td>
+              <td>Real</td>
+              <td>
+                <button
+                  type="button"
+                  data-testid="delete-btn"
+                  onClick={ () => deleteItem(despesa.id) }
+                >
+                  Excluir
+                </button>
+                <button
+                  type="button"
+                  data-testid="edit-btn"
+                  onClick={ () => this.renderEdit(despesa.id) }
+                >
+                  Editar
+                </button>
+              </td>
+            </tr>
+          ))}
+        </table>
+        {showEdit && <EditExpenses />}
+      </>
     );
   }
 }
