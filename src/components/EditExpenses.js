@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-// import { actionForm } from '../actions';
+import { actionForm } from '../actions';
 
 class EditExpenses extends React.Component {
   constructor(props) {
@@ -41,6 +41,35 @@ class EditExpenses extends React.Component {
     const { name, value } = target;
     this.setState({ [name]: value });
   }
+
+  editExpense = () => {
+    const { currency, value, description, method, tag } = this.state;
+    const { despesa } = this.props;
+    return { ...despesa,
+      currency,
+      value,
+      description,
+      tag,
+      method,
+    };
+  }
+
+  // nao fazer a alteração do etado aqui e sim
+  // no walletReducer. precisa criar uma nova ação
+  // para enviar a despesa alterada, que esta funcionando corretamente
+
+  // newExpenses = () => {
+  //   const { allExpenses, newForm } = this.props;
+  //   const editedExpense = this.editExpense();
+  //   const newAllExpenses = allExpenses.map((expense) => {
+  //     if (expense.id === editedExpense.id) {
+  //       return editedExpense;
+  //     }
+  //     return expense;
+  //   });
+  //   newForm(newAllExpenses);
+  //   // console.log(editedExpense);
+  // }
 
   render() {
     const { value, description, tag, method } = this.state;
@@ -109,7 +138,7 @@ class EditExpenses extends React.Component {
         </label>
         <button
           type="button"
-          onClick={ this.fetchExchangeRates }
+          onClick={ this.editExpense }
         >
           Adicionar despesa
         </button>
@@ -119,11 +148,16 @@ class EditExpenses extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
+  allExpenses: state.wallet.expenses,
   despesa: state.wallet.edit,
   coin: state.wallet.currencies,
 });
 
-export default connect(mapStateToProps)(EditExpenses);
+const mapDispatchToProps = (dispatch) => ({
+  newForm: (form) => dispatch(actionForm(form)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditExpenses);
 
 EditExpenses.propTypes = {
   despesa: PropTypes.arrayOf.isRequired,
