@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { actionForm } from '../actions';
+import { actionNewExpense, actionExibeForm } from '../actions';
 
 class EditExpenses extends React.Component {
   constructor(props) {
@@ -44,37 +44,22 @@ class EditExpenses extends React.Component {
 
   editExpense = () => {
     const { currency, value, description, method, tag } = this.state;
-    const { despesa } = this.props;
-    return { ...despesa,
+    const { despesa, newForm, showEditOff, showForm } = this.props;
+    const newExpense = { ...despesa,
       currency,
       value,
       description,
       tag,
       method,
     };
+    showEditOff();
+    newForm(newExpense);
+    showForm(true);
   }
-
-  // nao fazer a alteração do etado aqui e sim
-  // no walletReducer. precisa criar uma nova ação
-  // para enviar a despesa alterada, que esta funcionando corretamente
-
-  // newExpenses = () => {
-  //   const { allExpenses, newForm } = this.props;
-  //   const editedExpense = this.editExpense();
-  //   const newAllExpenses = allExpenses.map((expense) => {
-  //     if (expense.id === editedExpense.id) {
-  //       return editedExpense;
-  //     }
-  //     return expense;
-  //   });
-  //   newForm(newAllExpenses);
-  //   // console.log(editedExpense);
-  // }
 
   render() {
     const { value, description, tag, method } = this.state;
-    // console.log(despesa);
-    // const { value, description, tag, method } = this.state;
+
     return (
       <form>
         <label
@@ -138,9 +123,10 @@ class EditExpenses extends React.Component {
         </label>
         <button
           type="button"
+          data-testid="edit-btn"
           onClick={ this.editExpense }
         >
-          Adicionar despesa
+          Editar despesa
         </button>
       </form>
     );
@@ -148,13 +134,13 @@ class EditExpenses extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  allExpenses: state.wallet.expenses,
   despesa: state.wallet.edit,
   coin: state.wallet.currencies,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  newForm: (form) => dispatch(actionForm(form)),
+  newForm: (form) => dispatch(actionNewExpense(form)),
+  showForm: (bool) => dispatch(actionExibeForm(bool)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditExpenses);
@@ -162,4 +148,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(EditExpenses);
 EditExpenses.propTypes = {
   despesa: PropTypes.arrayOf.isRequired,
   coin: PropTypes.arrayOf.isRequired,
+  newForm: PropTypes.func.isRequired,
+  showForm: PropTypes.func.isRequired,
+  showEditOff: PropTypes.func.isRequired,
 };

@@ -65,7 +65,7 @@ class Form extends React.Component {
     );
   }
 
-  render() {
+  renderForm = () => {
     const { value, description, tag, method } = this.state;
     return (
       <form>
@@ -137,11 +137,18 @@ class Form extends React.Component {
       </form>
     );
   }
+
+  render() {
+    const { show } = this.props;
+    console.log(show);
+    return (show && this.renderForm());
+  }
 }
 
 const mapStateToProps = (state) => ({
   coin: state.wallet.currencies,
   id: state.wallet.expenses.length - 1,
+  show: state.wallet.exibeForm,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -154,4 +161,5 @@ Form.propTypes = {
   coin: PropTypes.arrayOf.isRequired,
   handleSubmitForm: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
+  show: PropTypes.bool.isRequired,
 };

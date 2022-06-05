@@ -1,8 +1,9 @@
-import { CURRENCY, DELETE, SUBMIT_FORM, EDIT } from '../actions';
+import { CURRENCY, DELETE, SUBMIT_FORM, EDIT, NEW_EXPENSE, EXIBE_FORM } from '../actions';
 
 const initialState = {
   currencies: [],
   expenses: [],
+  exibeForm: true,
 };
 
 const walletReducer = (state = initialState, action) => {
@@ -16,6 +17,12 @@ const walletReducer = (state = initialState, action) => {
       expenses: state.expenses.filter((exp) => exp.id !== action.payload) };
   case EDIT:
     return { ...state, edit: state.expenses[action.payload] };
+  case NEW_EXPENSE:
+    return { ...state,
+      expenses: state.expenses
+        .map((exp) => (exp.id === action.payload.id ? action.payload : exp)) };
+  case EXIBE_FORM:
+    return { ...state, exibeForm: action.payload };
   default:
     return state;
   }

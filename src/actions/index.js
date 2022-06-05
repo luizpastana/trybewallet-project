@@ -3,6 +3,8 @@ export const CURRENCY = 'CURRENCY';
 export const SUBMIT_FORM = 'SUBMIT_FORM';
 export const DELETE = 'DELETE';
 export const EDIT = 'EDIT';
+export const NEW_EXPENSE = 'NEW_EXPENSE';
+export const EXIBE_FORM = 'EXIBE_FORM';
 
 export const actionLogin = (email) => ({
   type: EMAIL_LOGIN,
@@ -43,4 +45,14 @@ export const actionDelete = (id) => ({
 export const actionEdit = (id) => ({
   type: EDIT,
   payload: id,
+});
+
+export const actionNewExpense = (form) => ({
+  type: NEW_EXPENSE,
+  payload: form,
+});
+
+export const actionExibeForm = (bool) => ({
+  type: EXIBE_FORM,
+  payload: bool,
 });

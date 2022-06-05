@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { actionDelete, actionEdit } from '../actions';
+import { actionDelete, actionEdit, actionExibeForm } from '../actions';
 import EditExpenses from './EditExpenses';
 
 class Table extends React.Component {
@@ -33,9 +33,14 @@ class Table extends React.Component {
   }
 
   renderEdit = (id) => {
-    const { editItem } = this.props;
+    const { editItem, showForm } = this.props;
+    showForm(false);
     editItem(id);
     this.setState({ showEdit: true });
+  }
+
+  showEditOff = () => {
+    this.setState({ showEdit: false });
   }
 
   render() {
@@ -84,7 +89,7 @@ class Table extends React.Component {
             </tr>
           ))}
         </table>
-        {showEdit && <EditExpenses />}
+        {showEdit && <EditExpenses showEditOff={ this.showEditOff } />}
       </>
     );
   }
@@ -97,6 +102,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   deleteItem: (id) => dispatch(actionDelete(id)),
   editItem: (id) => dispatch(actionEdit(id)),
+  showForm: (bool) => dispatch(actionExibeForm(bool)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
@@ -105,4 +111,5 @@ Table.propTypes = {
   despesas: PropTypes.arrayOf.isRequired,
   deleteItem: PropTypes.func.isRequired,
   editItem: PropTypes.func.isRequired,
+  showForm: PropTypes.func.isRequired,
 };
