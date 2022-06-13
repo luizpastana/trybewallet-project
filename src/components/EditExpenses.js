@@ -26,6 +26,7 @@ class EditExpenses extends React.Component {
       >
         Moeda:
         <select
+          data-testid="currency-input"
           id="currency"
           name="currency"
           value={ currency }
@@ -53,6 +54,7 @@ class EditExpenses extends React.Component {
       method,
     };
     showEditOff();
+    console.log(newExpense);
     newForm(newExpense);
     showForm(true);
   }

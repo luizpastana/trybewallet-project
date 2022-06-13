@@ -19,8 +19,20 @@ const walletReducer = (state = initialState, action) => {
     return { ...state, edit: state.expenses[action.payload] };
   case NEW_EXPENSE:
     return { ...state,
-      expenses: state.expenses
-        .map((exp) => (exp.id === action.payload.id ? action.payload : exp)) };
+      expenses: [...state.expenses.slice(0, action.payload.id),
+        action.payload,
+        ...state.expenses.slice(action.payload.id + 1)],
+    //   forEach((s) => {
+    //   if (s.id === action.payload.id) {
+    //     return action.payload;
+    //   }
+    //   return s;
+    // })
+    };
+    // [action.payload.id]: action.payload };
+    // ...state.slice(0, action.payload.id)
+    // ...action.payload,
+    // ...state.slice(action.payload.id + 1) };
   case EXIBE_FORM:
     return { ...state, exibeForm: action.payload };
   default:

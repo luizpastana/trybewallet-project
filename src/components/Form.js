@@ -140,8 +140,8 @@ class Form extends React.Component {
 
   render() {
     const { show } = this.props;
-    console.log(show);
-    return (show && this.renderForm());
+    // console.log(show);
+    return (show ? this.renderForm() : <p>Carregando</p>);
   }
 }
 
