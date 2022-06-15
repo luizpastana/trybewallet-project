@@ -31,8 +31,6 @@ class Login extends React.Component {
   }
 
   hendleSubmit = (e) => {
-    // Envia para o estado global
-    // Envia para a pagina '/carteira'
     e.preventDefault();
     const { emailInput } = this.state;
     const { history, submitLogin } = this.props;
