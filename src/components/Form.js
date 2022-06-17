@@ -1,4 +1,5 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { actionForm } from '../actions';
@@ -54,6 +55,7 @@ class Form extends React.Component {
       >
         Moeda:
         <select
+          className="form-control"
           id="currency"
           name="currency"
           value={ currency }
@@ -68,24 +70,29 @@ class Form extends React.Component {
   renderForm = () => {
     const { value, description, tag, method } = this.state;
     return (
-      <form>
-        <label
-          htmlFor="value"
-        >
-          Valor:
-          <input
-            data-testid="value-input"
-            id="value"
-            name="value"
-            value={ value }
-            onChange={ this.handleChange }
-          />
-        </label>
+      <form className="form-inline">
+        <div className="form-group">
+          <label
+            htmlFor="value"
+            className="input-group-text"
+          >
+            Valor:
+            <input
+              className="form-control"
+              data-testid="value-input"
+              id="value"
+              name="value"
+              value={ value }
+              onChange={ this.handleChange }
+            />
+          </label>
+        </div>
         <label
           htmlFor="description"
         >
           Descrição:
           <input
+            className="form-control"
             data-testid="description-input"
             id="description"
             name="description"
@@ -99,6 +106,7 @@ class Form extends React.Component {
         >
           Categoria:
           <select
+            className="form-control"
             id="tag"
             name="tag"
             data-testid="tag-input"
@@ -117,6 +125,7 @@ class Form extends React.Component {
         >
           Pagamento:
           <select
+            className="form-control"
             id="method"
             name="method"
             data-testid="method-input"
@@ -130,6 +139,7 @@ class Form extends React.Component {
         </label>
         <button
           type="button"
+          className="btn btn-primary"
           onClick={ this.fetchExchangeRates }
         >
           Adicionar despesa

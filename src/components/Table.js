@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import PropTypes from 'prop-types';
 import { actionDelete, actionEdit, actionExibeForm } from '../actions';
 import EditExpenses from './EditExpenses';
@@ -48,7 +49,7 @@ class Table extends React.Component {
     const { showEdit } = this.state;
     return (
       <>
-        <table>
+        <table className="table table-dark table-striped">
           <tr>
             <th>Descrição</th>
             <th>Tag</th>
@@ -72,6 +73,7 @@ class Table extends React.Component {
               <td>Real</td>
               <td>
                 <button
+                  className="btn btn-primary"
                   type="button"
                   data-testid="edit-btn"
                   onClick={ () => this.renderEdit(despesa.id) }
@@ -79,6 +81,7 @@ class Table extends React.Component {
                   Editar
                 </button>
                 <button
+                  className="btn btn-danger"
                   type="button"
                   data-testid="delete-btn"
                   onClick={ () => deleteItem(despesa.id) }

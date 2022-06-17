@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { connect } from 'react-redux';
 import { actionLogin } from '../actions';
 
@@ -42,30 +43,35 @@ class Login extends React.Component {
   render() {
     const { emailInput, senhaInput, buttonDisable } = this.state;
     return (
-      <section>
-        <label htmlFor="emailInput">
-          Email:
-          <input
-            data-testid="email-input"
-            name="emailInput"
-            id="emailInput"
-            type="text"
-            value={ emailInput }
-            onChange={ this.hendleChange }
-          />
-        </label>
-        <label htmlFor="senhaInput">
-          Senha:
-          <input
-            data-testid="password-input"
-            name="senhaInput"
-            id="senhaInput"
-            type="password"
-            value={ senhaInput }
-            onChange={ this.hendleChange }
-          />
-        </label>
+      <section className="container d-flex flex-column pt-4 bg-dark text-white">
+        <div className="mx-auto">
+          <label htmlFor="emailInput">
+            Email :
+            <input
+              data-testid="email-input"
+              name="emailInput"
+              id="emailInput"
+              type="text"
+              value={ emailInput }
+              onChange={ this.hendleChange }
+            />
+          </label>
+        </div>
+        <div className="flex-wrap mx-auto">
+          <label htmlFor="senhaInput">
+            Senha:
+            <input
+              data-testid="password-input"
+              name="senhaInput"
+              id="senhaInput"
+              type="password"
+              value={ senhaInput }
+              onChange={ this.hendleChange }
+            />
+          </label>
+        </div>
         <button
+          className="btn btn-secondary mx-auto"
           type="button"
           disabled={ buttonDisable }
           onClick={ this.hendleSubmit }

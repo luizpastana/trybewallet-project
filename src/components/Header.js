@@ -1,4 +1,5 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchAPI } from '../actions';
@@ -23,7 +24,9 @@ class Header extends React.Component {
     const { userEmail } = this.props;
 
     return (
-      <header>
+      <header
+        className="container bg-info text-white d-flex align-content-center"
+      >
         <span
           data-testid="email-field"
         >
