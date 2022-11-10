@@ -71,7 +71,7 @@ class Table extends React.Component {
               <td>{this.priceValue(despesa)}</td>
               <td>{this.valueConvert(despesa)}</td>
               <td>Real</td>
-              <td>
+              <td className="d-flex">
                 <button
                   className="btn btn-primary"
                   type="button"

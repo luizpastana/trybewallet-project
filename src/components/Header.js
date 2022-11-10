@@ -25,12 +25,18 @@ class Header extends React.Component {
 
     return (
       <header
-        className="container bg-info text-white d-flex align-content-center"
+        className="
+        text-center
+        text-white
+        bg-success
+        d-flex
+        flex-row
+        justify-content-around"
       >
         <span
           data-testid="email-field"
         >
-          {userEmail}
+          {`Email: ${userEmail}`}
         </span>
         <p
           data-testid="total-field"

@@ -52,6 +52,7 @@ class Form extends React.Component {
     return (
       <label
         htmlFor="currency"
+        className="input-group-text"
       >
         Moeda:
         <select
@@ -70,8 +71,8 @@ class Form extends React.Component {
   renderForm = () => {
     const { value, description, tag, method } = this.state;
     return (
-      <form className="form-inline">
-        <div className="form-group">
+      <form>
+        <div className="d-flex">
           <label
             htmlFor="value"
             className="input-group-text"
@@ -86,64 +87,67 @@ class Form extends React.Component {
               onChange={ this.handleChange }
             />
           </label>
+          <label
+            htmlFor="description"
+            className="input-group-text"
+          >
+            Descrição:
+            <input
+              className="form-control"
+              data-testid="description-input"
+              id="description"
+              name="description"
+              value={ description }
+              onChange={ this.handleChange }
+            />
+          </label>
+          {this.renderOptions()}
+          <label
+            htmlFor="tag"
+            className="input-group-text"
+          >
+            Categoria:
+            <select
+              className="form-control"
+              id="tag"
+              name="tag"
+              data-testid="tag-input"
+              value={ tag }
+              onChange={ this.handleChange }
+            >
+              <option value="Alimentacao">Alimentação</option>
+              <option value="Lazer">Lazer</option>
+              <option value="Trabalho">Trabalho</option>
+              <option value="Transporte">Transporte</option>
+              <option value="Saude">Saúde</option>
+            </select>
+          </label>
+          <label
+            htmlFor="method"
+            className="input-group-text"
+          >
+            Pagamento:
+            <select
+              className="form-control"
+              id="method"
+              name="method"
+              data-testid="method-input"
+              value={ method }
+              onChange={ this.handleChange }
+            >
+              <option value="Dinheiro">Dinheiro</option>
+              <option value="Cartão de crédito">Cartão de crédito</option>
+              <option value="Cartão de débito">Cartão de débito</option>
+            </select>
+          </label>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={ this.fetchExchangeRates }
+          >
+            Adicionar despesa
+          </button>
         </div>
-        <label
-          htmlFor="description"
-        >
-          Descrição:
-          <input
-            className="form-control"
-            data-testid="description-input"
-            id="description"
-            name="description"
-            value={ description }
-            onChange={ this.handleChange }
-          />
-        </label>
-        {this.renderOptions()}
-        <label
-          htmlFor="tag"
-        >
-          Categoria:
-          <select
-            className="form-control"
-            id="tag"
-            name="tag"
-            data-testid="tag-input"
-            value={ tag }
-            onChange={ this.handleChange }
-          >
-            <option value="Alimentacao">Alimentação</option>
-            <option value="Lazer">Lazer</option>
-            <option value="Trabalho">Trabalho</option>
-            <option value="Transporte">Transporte</option>
-            <option value="Saude">Saúde</option>
-          </select>
-        </label>
-        <label
-          htmlFor="method"
-        >
-          Pagamento:
-          <select
-            className="form-control"
-            id="method"
-            name="method"
-            data-testid="method-input"
-            value={ method }
-            onChange={ this.handleChange }
-          >
-            <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão de crédito">Cartão de crédito</option>
-            <option value="Cartão de débito">Cartão de débito</option>
-          </select>
-        </label>
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={ this.fetchExchangeRates }
-        >
-          Adicionar despesa
-        </button>
       </form>
     );
   }
